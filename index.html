@@ -54,6 +54,7 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('canards-grid');
   const confirmation = document.getElementById('confirmation');
   const selected = new Set();
@@ -74,14 +75,16 @@
     grid.appendChild(div);
   }
 
-  function validerSelection() {
+  window.validerSelection = function() {
     if(selected.size === 0) {
-      confirmation.textContent = \"Veuillez sélectionner au moins un canard.\";
+      confirmation.textContent = "Veuillez sélectionner au moins un canard.";
       return;
     }
     confirmation.textContent = `Vous avez réservé les canards n°: ${Array.from(selected).join(', ')}`;
   }
+});
 </script>
+
 
 <footer style=\"text-align:center; font-size:0.9em; color:#666; margin:40px 0 20px;\">
   &copy; 2025 Grizzlies Dodgeball Club — Site propulsé par GitHub Pages
