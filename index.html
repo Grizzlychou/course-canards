@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course des Canards - Grizzlies Dodgeball Club</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #e6f7ff; margin: 0; padding: 0; }
+  header { background: #004d99; color: white; padding: 20px; text-align: center; }
+  header img { height: 80px; vertical-align: middle; }
+  .hero { background: #68c3c0; color: white; text-shadow: 1px 1px 2px black; padding: 80px 20px; text-align: center; }
+  .hero h1 { font-size: 3em; margin: 0; }
+  .hero p { font-size: 1.2em; }
+  .content { max-width: 800px; margin: 40px auto; background: white; padding: 20px; border-radius: 8px; text-align: center; }
+  .reserve-button { display: inline-block; padding: 15px 30px; font-size: 1.5em; background: linear-gradient(45deg, #ffcc00, #ff9900); color: #333; border: none; border-radius: 50px; cursor: pointer; text-decoration: none; transition: transform 0.2s; }
+  .reserve-button:hover { transform: scale(1.05); }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+  .modal-content { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 500px; }
+  label { display: block; margin-top: 10px; text-align: left; }
+  input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+  .footer { font-size: 0.9em; color: #666; margin-top: 20px; }
+  .qrcode { text-align: center; margin-top: 20px; }
+</style>
+</head>
+<body>
+<header>
+  <h2>Grizzlies Dodgeball Club de Jodoigne</h2>
+</header>
+<div class="hero">
+  <h1>Course des Canards 🦆</h1>
+  <p>4e édition — 24 août à 15h à la Stampia, Jodoigne</p>
+</div>
+<div class="content">
+  <p>Participez à notre grande course de canards en plastique et tentez de gagner de nombreux lots !<br>
+  Mise : 2€/canard. Prix : 100€ - 50€ - 25€ pour les 3 premiers.</p>
+  <a class="reserve-button" href="#" onclick="document.getElementById('modal').style.display='flex'">🐥 Réserver mon canard</a>
+</div>
+<div id="modal" class="modal" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal-content">
+    <h2>Réservez votre Canard 🦆</h2>
+    <form>
+      <label for="nom">Votre nom</label>
+      <input type="text" id="nom" name="nom" required>
+
+      <label for="email">Votre email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="nombre">Nombre de canards (2€/canard)</label>
+      <input type="number" id="nombre" name="nombre" min="1" required>
+
+      <label for="commentaire">Commentaire (facultatif)</label>
+      <input type="text" id="commentaire" name="commentaire">
+
+      <button type="submit">Envoyer ma réservation</button>
+    </form>
+
+    <div class="qrcode">
+      <p>Vous pouvez également payer via Payconiq en scannant ce QR code :</p>
+      <img src="qrcode-payconiq.png" alt="QR Code Payconiq" style="max-width:200px;">
+    </div>
+
+    <p class="footer">Ou par virement : BE04 0634 0580 8831<br>
+    Communication : \"Votre nom, nombre de canards, course aux canards\"</p>
+  </div>
+</div>
+</body>
+</html>
