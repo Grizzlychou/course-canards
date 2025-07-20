@@ -4,90 +4,84 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Course des Canards - Grizzlies Dodgeball Club</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body { font-family: 'Roboto', sans-serif; margin: 0; background: #f4f8fb; color: #333; }
-  header { background: #004d99; color: white; padding: 20px; text-align: center; }
-  header h1 { margin: 0; font-size: 2.5em; }
-  header p { margin: 5px 0 0; font-size: 1.2em; }
-  nav { background: #003366; text-align: center; }
-  nav a { color: white; text-decoration: none; padding: 15px 20px; display: inline-block; }
-  nav a:hover { background: #002244; }
-  section { max-width: 1000px; margin: 40px auto; padding: 20px; background: white; border-radius: 8px; }
-  .hero { background: #68c3c0; color: white; padding: 60px 20px; text-align: center; }
-  .hero h2 { font-size: 3em; margin: 0; }
-  .hero p { font-size: 1.2em; }
-  .reserve-button { display: inline-block; margin: 20px 0; padding: 15px 30px; background: #ffcc00; color: #333; font-size: 1.2em; border: none; border-radius: 50px; text-decoration: none; }
-  .reserve-button:hover { background: #e6b800; cursor: pointer; }
-  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 10; }
-  .modal-content { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 800px; max-height: 90%; overflow-y: auto; text-align: center; }
-  .canards-grid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 5px; margin: 20px 0; }
-  .canard { background: #eee; border: 1px solid #ccc; padding: 8px; cursor: pointer; border-radius: 4px; font-size: 0.8em; }
-  .canard.selected { background: #ffcc00; }
-  button.validate { margin-top: 20px; padding: 10px 20px; font-size: 1em; background: #004d99; color: white; border: none; border-radius: 4px; cursor: pointer; }
+  body {
+    margin: 0; font-family: 'Roboto', sans-serif;
+    background: #fff8d6; color: #333;
+  }
+  header {
+    background: #ffe600; text-align: center;
+    padding: 20px; color: #000; font-family: 'Fredoka One', cursive;
+  }
+  header h1 {
+    font-size: 3em; margin: 0;
+  }
+  header p {
+    margin: 5px 0 0; font-size: 1.2em;
+  }
+  .hero {
+    background: linear-gradient(#a6e1fa, #7cd1c0);
+    text-align: center; padding: 40px 20px;
+  }
+  .hero img {
+    max-width: 300px;
+  }
+  .hero h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5em; margin: 20px 0 10px;
+    color: #000;
+  }
+  .hero p {
+    font-size: 1.2em; color: #000;
+  }
+  .reserve-button {
+    display: inline-block;
+    background: #ffe600; color: #000;
+    font-size: 1.2em; padding: 15px 30px;
+    text-decoration: none; border-radius: 50px;
+    margin-top: 20px; font-weight: bold;
+  }
+  .reserve-button:hover {
+    background: #ffd700;
+  }
+  .info {
+    max-width: 800px; margin: 40px auto; text-align: center;
+    background: white; padding: 20px; border-radius: 8px;
+  }
+  .info h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+  }
+  footer {
+    text-align: center; font-size: 0.9em;
+    color: #666; margin: 40px 0 20px;
+  }
 </style>
 </head>
 <body>
+
 <header>
-  <h1>Grizzlies Dodgeball Club</h1>
-  <p>Jodoigne - Course des Canards</p>
+  <h1>Course des Canards</h1>
+  <p>4e édition — 24 août à 15h — La Stampia, Jodoigne</p>
 </header>
 
-<section class="hero">
-  <h2>Course des Canards 🦆</h2>
-  <p>4e édition — 24 août à 15h à la Stampia, Jodoigne</p>
-  <a class="reserve-button" onclick="document.getElementById('modal').style.display='flex'">🐥 Réserver mon canard</a>
-</section>
-
-<section>
-  <h2>À propos</h2>
-  <p>Le Grizzlies Dodgeball Club de Jodoigne organise chaque année une course festive de canards en plastique. Venez passer un après-midi amusant en famille et tenter de remporter des lots !</p>
-</section>
-
-<div id="modal" class="modal" onclick="if(event.target===this)this.style.display='none'">
-  <div class="modal-content">
-    <h2>Sélectionnez vos canards 🦆</h2>
-    <div class="canards-grid" id="canards-grid"></div>
-    <button class="validate" onclick="validerSelection()">Valider ma réservation</button>
-    <p id="confirmation" style="margin-top:10px; color:green;"></p>
-  </div>
+<div class="hero">
+  <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Canard">
+  <h2>Venez vivre la course la plus fun de l'année !</h2>
+  <p>2€/mise — nombreux prix pour le podium — Entrée libre !</p>
+  <a href="#reserve" class="reserve-button">🐥 Réserver mon canard</a>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('canards-grid');
-  const confirmation = document.getElementById('confirmation');
-  const selected = new Set();
+<div class="info">
+  <h3>Comment participer ?</h3>
+  <p>Rendez-vous à la Stampia, Jodoigne le 24/08 à 15h.<br>
+     Vous pouvez déjà réserver votre canard en ligne et choisir vos numéros le jour J !</p>
+</div>
 
-  for(let i=1; i<=320; i++) {
-    const div = document.createElement('div');
-    div.className = 'canard';
-    div.textContent = i;
-    div.onclick = () => {
-      if(selected.has(i)) {
-        selected.delete(i);
-        div.classList.remove('selected');
-      } else {
-        selected.add(i);
-        div.classList.add('selected');
-      }
-    };
-    grid.appendChild(div);
-  }
-
-  window.validerSelection = function() {
-    if(selected.size === 0) {
-      confirmation.textContent = "Veuillez sélectionner au moins un canard.";
-      return;
-    }
-    confirmation.textContent = `Vous avez réservé les canards n°: ${Array.from(selected).join(', ')}`;
-  }
-});
-</script>
-
-
-<footer style=\"text-align:center; font-size:0.9em; color:#666; margin:40px 0 20px;\">
+<footer>
   &copy; 2025 Grizzlies Dodgeball Club — Site propulsé par GitHub Pages
 </footer>
+
 </body>
 </html>
