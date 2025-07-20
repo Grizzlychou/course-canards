@@ -17,10 +17,14 @@
   .hero { background: #68c3c0; color: white; padding: 60px 20px; text-align: center; }
   .hero h2 { font-size: 3em; margin: 0; }
   .hero p { font-size: 1.2em; }
-  .gallery img { width: 100%; max-width: 300px; margin: 10px; border-radius: 8px; }
   .reserve-button { display: inline-block; margin: 20px 0; padding: 15px 30px; background: #ffcc00; color: #333; font-size: 1.2em; border: none; border-radius: 50px; text-decoration: none; }
-  .reserve-button:hover { background: #e6b800; }
-  footer { text-align: center; font-size: 0.9em; color: #666; margin: 40px 0 20px; }
+  .reserve-button:hover { background: #e6b800; cursor: pointer; }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 10; }
+  .modal-content { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 800px; max-height: 90%; overflow-y: auto; text-align: center; }
+  .canards-grid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 5px; margin: 20px 0; }
+  .canard { background: #eee; border: 1px solid #ccc; padding: 8px; cursor: pointer; border-radius: 4px; font-size: 0.8em; }
+  .canard.selected { background: #ffcc00; }
+  button.validate { margin-top: 20px; padding: 10px 20px; font-size: 1em; background: #004d99; color: white; border: none; border-radius: 4px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -28,52 +32,58 @@
   <h1>Grizzlies Dodgeball Club</h1>
   <p>Jodoigne - Course des Canards</p>
 </header>
-<nav>
-  <a href="#about">À propos</a>
-  <a href="#howto">Comment participer ?</a>
-  <a href="#gallery">Galerie</a>
-  <a href="#reserve">Réserver</a>
-  <a href="#contact">Contact</a>
-</nav>
+
 <section class="hero">
   <h2>Course des Canards 🦆</h2>
   <p>4e édition — 24 août à 15h à la Stampia, Jodoigne</p>
-  <a class="reserve-button" href="#reserve">🐥 Réserver mon canard</a>
+  <a class="reserve-button" onclick="document.getElementById('modal').style.display='flex'">🐥 Réserver mon canard</a>
 </section>
-<section id="about">
+
+<section>
   <h2>À propos</h2>
   <p>Le Grizzlies Dodgeball Club de Jodoigne organise chaque année une course festive de canards en plastique. Venez passer un après-midi amusant en famille et tenter de remporter des lots !</p>
 </section>
-<section id="howto">
-  <h2>Comment participer ?</h2>
-  <p>1️⃣ Choisissez le nombre de canards (2€/canard).<br>
-     2️⃣ Réservez en ligne ou sur place le jour J.<br>
-     3️⃣ Regardez votre canard courir sur l’eau et gagnez si vous êtes parmi les premiers !</p>
-</section>
-<section id="gallery" class="gallery">
-  <h2>Galerie</h2>
-  <img src="https://via.placeholder.com/300x200?text=Course+2023" alt="Course 2023">
-  <img src="https://via.placeholder.com/300x200?text=Public" alt="Public">
-</section>
-<section id="reserve">
-  <h2>Réserver votre canard 🦆</h2>
-  <form>
-    <label>Votre nom<br><input type="text" required></label><br>
-    <label>Email<br><input type="email" required></label><br>
-    <label>Nombre de canards<br><input type="number" min="1" required></label><br>
-    <button class="reserve-button" type="submit">Envoyer ma réservation</button>
-  </form>
-  <p>Ou payez directement :<br>
-  IBAN : BE04 0634 0580 8831<br>
-  Communication : votre nom + nombre de canards</p>
-</section>
-<section id="contact">
-  <h2>Contact</h2>
-  <p>Email : contact@grizzliesjodoigne.be<br>
-     Téléphone : +32 634 058 883<br>
-     Facebook : Grizzlies Dodgeball Club Jodoigne</p>
-</section>
-<footer>
+
+<div id="modal" class="modal" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal-content">
+    <h2>Sélectionnez vos canards 🦆</h2>
+    <div class="canards-grid" id="canards-grid"></div>
+    <button class="validate" onclick="validerSelection()">Valider ma réservation</button>
+    <p id="confirmation" style="margin-top:10px; color:green;"></p>
+  </div>
+</div>
+
+<script>
+  const grid = document.getElementById('canards-grid');
+  const confirmation = document.getElementById('confirmation');
+  const selected = new Set();
+
+  for(let i=1; i<=320; i++) {
+    const div = document.createElement('div');
+    div.className = 'canard';
+    div.textContent = i;
+    div.onclick = () => {
+      if(selected.has(i)) {
+        selected.delete(i);
+        div.classList.remove('selected');
+      } else {
+        selected.add(i);
+        div.classList.add('selected');
+      }
+    };
+    grid.appendChild(div);
+  }
+
+  function validerSelection() {
+    if(selected.size === 0) {
+      confirmation.textContent = \"Veuillez sélectionner au moins un canard.\";
+      return;
+    }
+    confirmation.textContent = `Vous avez réservé les canards n°: ${Array.from(selected).join(', ')}`;
+  }
+</script>
+
+<footer style=\"text-align:center; font-size:0.9em; color:#666; margin:40px 0 20px;\">
   &copy; 2025 Grizzlies Dodgeball Club — Site propulsé par GitHub Pages
 </footer>
 </body>
