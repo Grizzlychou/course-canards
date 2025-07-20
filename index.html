@@ -4,64 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Course des Canards - Grizzlies Dodgeball Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body { font-family: Arial, sans-serif; background: #e6f7ff; margin: 0; padding: 0; }
+  body { font-family: 'Roboto', sans-serif; margin: 0; background: #f4f8fb; color: #333; }
   header { background: #004d99; color: white; padding: 20px; text-align: center; }
-  header img { height: 80px; vertical-align: middle; }
-  .hero { background: #68c3c0; color: white; text-shadow: 1px 1px 2px black; padding: 80px 20px; text-align: center; }
-  .hero h1 { font-size: 3em; margin: 0; }
+  header h1 { margin: 0; font-size: 2.5em; }
+  header p { margin: 5px 0 0; font-size: 1.2em; }
+  nav { background: #003366; text-align: center; }
+  nav a { color: white; text-decoration: none; padding: 15px 20px; display: inline-block; }
+  nav a:hover { background: #002244; }
+  section { max-width: 1000px; margin: 40px auto; padding: 20px; background: white; border-radius: 8px; }
+  .hero { background: #68c3c0; color: white; padding: 60px 20px; text-align: center; }
+  .hero h2 { font-size: 3em; margin: 0; }
   .hero p { font-size: 1.2em; }
-  .content { max-width: 800px; margin: 40px auto; background: white; padding: 20px; border-radius: 8px; text-align: center; }
-  .reserve-button { display: inline-block; padding: 15px 30px; font-size: 1.5em; background: linear-gradient(45deg, #ffcc00, #ff9900); color: #333; border: none; border-radius: 50px; cursor: pointer; text-decoration: none; transition: transform 0.2s; }
-  .reserve-button:hover { transform: scale(1.05); }
-  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
-  .modal-content { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 500px; }
-  label { display: block; margin-top: 10px; text-align: left; }
-  input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
-  .footer { font-size: 0.9em; color: #666; margin-top: 20px; }
-  .qrcode { text-align: center; margin-top: 20px; }
+  .gallery img { width: 100%; max-width: 300px; margin: 10px; border-radius: 8px; }
+  .reserve-button { display: inline-block; margin: 20px 0; padding: 15px 30px; background: #ffcc00; color: #333; font-size: 1.2em; border: none; border-radius: 50px; text-decoration: none; }
+  .reserve-button:hover { background: #e6b800; }
+  footer { text-align: center; font-size: 0.9em; color: #666; margin: 40px 0 20px; }
 </style>
 </head>
 <body>
 <header>
-  <h2>Grizzlies Dodgeball Club de Jodoigne</h2>
+  <h1>Grizzlies Dodgeball Club</h1>
+  <p>Jodoigne - Course des Canards</p>
 </header>
-<div class="hero">
-  <h1>Course des Canards 🦆</h1>
+<nav>
+  <a href="#about">À propos</a>
+  <a href="#howto">Comment participer ?</a>
+  <a href="#gallery">Galerie</a>
+  <a href="#reserve">Réserver</a>
+  <a href="#contact">Contact</a>
+</nav>
+<section class="hero">
+  <h2>Course des Canards 🦆</h2>
   <p>4e édition — 24 août à 15h à la Stampia, Jodoigne</p>
-</div>
-<div class="content">
-  <p>Participez à notre grande course de canards en plastique et tentez de gagner de nombreux lots !<br>
-  Mise : 2€/canard. Prix : 100€ - 50€ - 25€ pour les 3 premiers.</p>
-  <a class="reserve-button" href="#" onclick="document.getElementById('modal').style.display='flex'">🐥 Réserver mon canard</a>
-</div>
-<div id="modal" class="modal" onclick="if(event.target===this)this.style.display='none'">
-  <div class="modal-content">
-    <h2>Réservez votre Canard 🦆</h2>
-    <form>
-      <label for="nom">Votre nom</label>
-      <input type="text" id="nom" name="nom" required>
-
-      <label for="email">Votre email</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="nombre">Nombre de canards (2€/canard)</label>
-      <input type="number" id="nombre" name="nombre" min="1" required>
-
-      <label for="commentaire">Commentaire (facultatif)</label>
-      <input type="text" id="commentaire" name="commentaire">
-
-      <button type="submit">Envoyer ma réservation</button>
-    </form>
-
-    <div class="qrcode">
-      <p>Vous pouvez également payer via Payconiq en scannant ce QR code :</p>
-      <img src="qrcode-payconiq.png" alt="QR Code Payconiq" style="max-width:200px;">
-    </div>
-
-    <p class="footer">Ou par virement : BE04 0634 0580 8831<br>
-    Communication : \"Votre nom, nombre de canards, course aux canards\"</p>
-  </div>
-</div>
+  <a class="reserve-button" href="#reserve">🐥 Réserver mon canard</a>
+</section>
+<section id="about">
+  <h2>À propos</h2>
+  <p>Le Grizzlies Dodgeball Club de Jodoigne organise chaque année une course festive de canards en plastique. Venez passer un après-midi amusant en famille et tenter de remporter des lots !</p>
+</section>
+<section id="howto">
+  <h2>Comment participer ?</h2>
+  <p>1️⃣ Choisissez le nombre de canards (2€/canard).<br>
+     2️⃣ Réservez en ligne ou sur place le jour J.<br>
+     3️⃣ Regardez votre canard courir sur l’eau et gagnez si vous êtes parmi les premiers !</p>
+</section>
+<section id="gallery" class="gallery">
+  <h2>Galerie</h2>
+  <img src="https://via.placeholder.com/300x200?text=Course+2023" alt="Course 2023">
+  <img src="https://via.placeholder.com/300x200?text=Public" alt="Public">
+</section>
+<section id="reserve">
+  <h2>Réserver votre canard 🦆</h2>
+  <form>
+    <label>Votre nom<br><input type="text" required></label><br>
+    <label>Email<br><input type="email" required></label><br>
+    <label>Nombre de canards<br><input type="number" min="1" required></label><br>
+    <button class="reserve-button" type="submit">Envoyer ma réservation</button>
+  </form>
+  <p>Ou payez directement :<br>
+  IBAN : BE04 0634 0580 8831<br>
+  Communication : votre nom + nombre de canards</p>
+</section>
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email : contact@grizzliesjodoigne.be<br>
+     Téléphone : +32 634 058 883<br>
+     Facebook : Grizzlies Dodgeball Club Jodoigne</p>
+</section>
+<footer>
+  &copy; 2025 Grizzlies Dodgeball Club — Site propulsé par GitHub Pages
+</footer>
 </body>
 </html>
