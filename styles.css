@@ -28,7 +28,7 @@ header p {
   position: relative;
   background-image: url('img/affiche-course.png');
   background-size: cover;
-  background-position: center top -30px; /* <- ajuste ici */
+  background-position: center top -60px; /* <- ajuste ici */
   height: 100vh;
   display: flex;
   align-items: flex-end; /* Le bloc blanc descend en bas */
