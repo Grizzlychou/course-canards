@@ -1,0 +1,168 @@
+/* Style global */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #fff8d6;
+  color: #333;
+}
+
+/* En-tête */
+header {
+  background: #ffe600;
+  text-align: center;
+  padding: 20px;
+  color: #000;
+  font-family: 'Fredoka One', cursive;
+}
+header h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+header p {
+  margin: 5px 0 0;
+  font-size: 1.5em;
+}
+
+/* Section héro */
+.hero {
+  background: linear-gradient(#a6e1fa, #7cd1c0);
+  text-align: center;
+  padding: 40px 20px;
+}
+.hero img {
+  max-width: 300px;
+}
+.hero h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.5em;
+  margin: 20px 0 10px;
+  color: #000;
+}
+.hero p {
+  font-size: 1.2em;
+  color: #000;
+}
+
+/* Bouton de réservation */
+.reserve-button {
+  display: inline-block;
+  background: #ffe600;
+  color: #000;
+  font-size: 1.2em;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 50px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+.reserve-button:hover {
+  background: #ffd700;
+}
+
+/* Bloc d’informations */
+.info {
+  max-width: 800px;
+  margin: 40px auto;
+  text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+.info h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2em;
+}
+
+/* Pied de page */
+footer {
+  text-align: center;
+  font-size: 0.9em;
+  color: #666;
+  margin: 40px 0 20px;
+}
+
+/* Modale de sélection des canards */
+#duckModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.8);
+}
+#duckModal .modal-content {
+  background: #fff8d6;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 900px;
+  position: relative;
+}
+#duckModal .close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.8em;
+  cursor: pointer;
+}
+
+/* Grille des canards */
+.duck-grid {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.duck-grid img {
+  width: 100%;
+  display: block;
+}
+.duck {
+  position: absolute;
+  cursor: pointer;
+}
+.duck.reserved {
+  background: rgba(255, 0, 0, 0.4);
+  pointer-events: none;
+}
+.duck.selected {
+  background: rgba(255, 255, 0, 0.4);
+}
+
+/* Zone de sélection */
+#selection {
+  margin-top: 15px;
+  font-size: 1.1em;
+}
+#selection span {
+  font-weight: bold;
+}
+
+/* Modale de confirmation */
+#confirmModal {
+  display: none;
+  position: fixed;
+  z-index: 1100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+#confirmModal .content {
+  background: #fff8d6;
+  margin: 10% auto;
+  padding: 20px;
+  max-width: 600px;
+  border-radius: 8px;
+  position: relative;
+}
+#confirmModal .close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.8em;
+  cursor: pointer;
+}
