@@ -183,25 +183,39 @@ finaliserBtn.addEventListener('click', async function() {
 
 // Construire et afficher le récapitulatif de confirmation
 function showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo) {
+  // Message de base avec les numéros triés
   let message  = "Vous avez réservé les canards : " +
     selected.slice().sort((a, b) => a - b).join(', ');
+
+  // Ajout du total
   message += "<br>Total : " + (selected.length * 2) + " €";
+
+  // Ajout de la méthode de paiement
   message += "<br>Méthode de paiement : " +
-  (paymentMethod === 'virement' ? 'Par virement' : "En espèces le jour de l'évènement");
+    (paymentMethod === 'virement' ? 'Par virement' : "En espèces le jour de l'évènement");
+
+  // Si virement, ajouter les coordonnées bancaires
   if (paymentMethod === 'virement') {
     message += "<br><br><strong>Veuillez effectuer votre virement à :</strong><br>";
     message += "IBAN : BE00 0000 0000 0000<br>BIC : ABCDBEBE<br>Communication : Course des canards + votre nom";
   }
+
+  // Ajouter l'adresse e-mail
   message += "<br><br>Un e‑mail de confirmation sera envoyé à : " + email;
+
+  // Ajouter les options de notification
   if (notifyNextYear) {
     message += "<br>• Vous recevrez une invitation pour la prochaine édition.";
   }
   if (sendPaymentInfo) {
     message += "<br>• Les informations de paiement vous seront renvoyées par e‑mail.";
   }
+
+  // Afficher le message dans la fenêtre de confirmation
   confirmText.innerHTML = message;
   confirmModal.style.display = 'block';
 }
+
 
 // Fermer la modale de confirmation
 closeConfirm.addEventListener('click', function() {
