@@ -28,12 +28,14 @@ header p {
   position: relative;
   background-image: url('img/affiche-course.png');
   background-size: cover;
-  background-position: top; /* top au lieu de center */
-  height: 100vh; /* plus haut que 80vh */
+  background-position: center top -30px; /* <- ajuste ici */
+  height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-end; /* Le bloc blanc descend en bas */
   justify-content: center;
+  padding-bottom: 60px; /* Décale le panneau blanc sous "4E ÉDITION" */
 }
+
 
 
 .hero-overlay {
