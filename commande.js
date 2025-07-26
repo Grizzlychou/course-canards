@@ -138,7 +138,7 @@ finaliserBtn.addEventListener('click', async function () {
 
   const prenom = prenomInput ? prenomInput.value.trim() : '';
   const nom = nomInput ? nomInput.value.trim() : '';
-  const participation = participationCheckbox?.checked ? 'présent' : 'absent';
+  const participation = participationCheckbox ? participationCheckbox.checked : false;
 
   const notifyNextYear = notifyCheckbox ? notifyCheckbox.checked : false;
   const sendPaymentInfo = paymentInfoCheckbox ? paymentInfoCheckbox.checked : false;
@@ -147,39 +147,41 @@ finaliserBtn.addEventListener('click', async function () {
     alert("Veuillez sélectionner au moins un canard.");
     return;
   }
+
   if (!email || !email.includes('@')) {
     alert("Veuillez entrer une adresse email valide.");
     return;
   }
+
   if (!paymentMethod) {
     alert("Veuillez sélectionner un mode de paiement.");
     return;
   }
 
-const formData = new FormData();
-formData.append("numeros", JSON.stringify(selected));
-formData.append("prenom", prenom);
-formData.append("nom", nom);
-formData.append("email", email);
-formData.append("participation", participation);
-formData.append("moyenPaiement", paymentMethod);
-formData.append("notifyNextYear", notifyNextYear ? "Oui" : "Non");
-formData.append("sendPaymentInfo", sendPaymentInfo ? "Oui" : "Non");
+  const payload = {
+    numeros: selected,
+    prenom: prenom,
+    nom: nom,
+    email: email,
+    participation: participation,
+    moyenPaiement: paymentMethod,
+    notifyNextYear: notifyNextYear,
+    sendPaymentInfo: sendPaymentInfo
+  };
 
-
-  // On ignore l'erreur de lecture de réponse, et on continue quoi qu'il arrive
   try {
     await fetch(scriptURL, {
       method: 'POST',
       mode: 'no-cors',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
     });
   } catch (err) {
-    // L’erreur ici n’indique pas un échec de la requête, donc on log juste un warning
     console.warn("Réponse non lisible, mais requête probablement envoyée :", err);
   }
 
-  // On continue avec la suite
   await chargerStatuts(); // Recharge la grille avec les canards à jour
   modal.style.display = 'none';
   showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo);
