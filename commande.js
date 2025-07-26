@@ -138,7 +138,7 @@ finaliserBtn.addEventListener('click', async function () {
 
   const prenom = prenomInput ? prenomInput.value.trim() : '';
   const nom = nomInput ? nomInput.value.trim() : '';
-  const participation = participationCheckbox ? participationCheckbox.checked : false;
+  const participation = participationCheckbox?.checked ? 'présent' : 'absent';
 
   const notifyNextYear = notifyCheckbox ? notifyCheckbox.checked : false;
   const sendPaymentInfo = paymentInfoCheckbox ? paymentInfoCheckbox.checked : false;
@@ -161,10 +161,10 @@ const payload = {
   prenom: prenom,
   nom: nom,
   email: email,
+  participation: participation,
   moyenPaiement: paymentMethod,
   notifyNextYear: notifyNextYear,
   sendPaymentInfo: sendPaymentInfo,
-  participation: participation
 };
 
 
