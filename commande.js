@@ -184,10 +184,11 @@ finaliserBtn.addEventListener('click', async function() {
 // Construire et afficher le récapitulatif de confirmation
 function showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo) {
   let message  = "Vous avez réservé les canards : " +
-    selected.slice().sort((a,b) => a - b).join(', ');
+    selected.slice().sort((a, b) => a - b).join(', ');
   message += "<br>Total : " + (selected.length * 2) + " €";
   message += "<br>Méthode de paiement : " +
-    (paymentMethod === 'virement' ? 'Par virement' : 'En espèces le jour de l\'évènement')";
+    message += "<br>Méthode de paiement : " +
+  (paymentMethod === 'virement' ? 'Par virement' : "En espèces le jour de l'évènement");
   if (paymentMethod === 'virement') {
     message += "<br><br><strong>Veuillez effectuer votre virement à :</strong><br>";
     message += "IBAN : BE00 0000 0000 0000<br>BIC : ABCDBEBE<br>Communication : Course des canards + votre nom";
