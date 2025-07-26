@@ -26,7 +26,7 @@ header p {
 /* Nouvelle section héro avec image plein écran */
 .hero-image {
   position: relative;
-  background-image: url('img/affiche-courses.jpg');
+  background-image: url('img/affiche-course.png');
   background-size: cover;
   background-position: center;
   height: 80vh;
