@@ -127,14 +127,12 @@ function updateSummary() {
 
 // Finaliser la commande : validation, envoi à Apps Script puis affichage de la confirmation
 finaliserBtn.addEventListener('click', async function () {
-  // Récupération des infos utilisateur
   const emailInput = document.getElementById('email');
   const email = emailInput.value.trim();
   const paymentMethod = document.querySelector('input[name="paiement"]:checked')?.value;
   const notifyNextYear = document.getElementById('notifyCheckbox').checked;
   const sendPaymentInfo = document.getElementById('paymentInfoCheckbox').checked;
 
-  // Vérifications
   if (selected.length === 0) {
     alert("Veuillez sélectionner au moins un canard.");
     return;
@@ -148,37 +146,36 @@ finaliserBtn.addEventListener('click', async function () {
     return;
   }
 
-  // Construction des données à envoyer
   const payload = {
     numeros: selected,
-    nom: '', // À compléter si tu ajoutes un champ nom
+    nom: '', // À compléter si besoin
     email: email,
     moyenPaiement: paymentMethod,
     notifyNextYear: notifyNextYear,
     sendPaymentInfo: sendPaymentInfo
   };
 
+  // On ignore l'erreur de lecture de réponse, et on continue quoi qu'il arrive
   try {
     await fetch(scriptURL, {
       method: 'POST',
-      mode: 'no-cors', // permet d’envoyer sans erreur CORS mais sans lire la réponse
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-
-    await chargerStatuts(); // Mise à jour des canards réservés
-    modal.style.display = 'none';
-    showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo);
-    selected = [];
-    updateSummary();
   } catch (err) {
-    console.warn("La requête a été envoyée, mais la réponse n'a pas pu être lue :", err);
-    modal.style.display = 'none';
-    showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo);
-    selected = [];
-    updateSummary();
+    // L’erreur ici n’indique pas un échec de la requête, donc on log juste un warning
+    console.warn("Réponse non lisible, mais requête probablement envoyée :", err);
   }
+
+  // On continue avec la suite
+  await chargerStatuts(); // Recharge la grille avec les canards à jour
+  modal.style.display = 'none';
+  showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo);
+  selected = [];
+  updateSummary();
 });
+
 
 
 // Construire et afficher le récapitulatif de confirmation
