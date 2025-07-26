@@ -18,6 +18,21 @@
   <p>organise la</p>
 </header>
 
+  <!-- AUDIO -->
+  <audio id="duck-sound" src="img/SF-coin.mp3" preload="auto"></audio>
+
+  <!-- SCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("reserve-button");
+      const duckSound = document.getElementById("duck-sound");
+
+      btn.addEventListener("click", function () {
+        duckSound.currentTime = 0;
+        duckSound.play();
+      });
+    });
+  </script>
 <!-- Bloc héro avec image pleine largeur + texte centré -->
 <div class="hero-image">
   <div class="hero-overlay">
