@@ -7,68 +7,95 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
   body {
-    margin: 0; font-family: 'Roboto', sans-serif;
-    background: #fff8d6; color: #333;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #fff8d6;
+    color: #333;
   }
   header {
-    background: #ffe600; text-align: center;
-    padding: 20px; color: #000; font-family: 'Fredoka One', cursive;
+    background: #ffe600;
+    text-align: center;
+    padding: 20px;
+    color: #000;
+    font-family: 'Fredoka One', cursive;
   }
   header h1 {
-    font-size: 2.5em; margin: 0;
+    font-size: 2.5em;
+    margin: 0;
   }
   header p {
-    margin: 5px 0 0; font-size: 1.5em;
+    margin: 5px 0 0;
+    font-size: 1.5em;
   }
   .hero {
     background: linear-gradient(#a6e1fa, #7cd1c0);
-    text-align: center; padding: 40px 20px;
+    text-align: center;
+    padding: 40px 20px;
   }
   .hero img {
     max-width: 300px;
   }
   .hero h2 {
     font-family: 'Fredoka One', cursive;
-    font-size: 2.5em; margin: 20px 0 10px;
+    font-size: 2.5em;
+    margin: 20px 0 10px;
     color: #000;
   }
   .hero p {
-    font-size: 1.2em; color: #000;
+    font-size: 1.2em;
+    color: #000;
   }
   .reserve-button {
     display: inline-block;
-    background: #ffe600; color: #000;
-    font-size: 1.2em; padding: 15px 30px;
-    text-decoration: none; border-radius: 50px;
-    margin-top: 20px; font-weight: bold;
+    background: #ffe600;
+    color: #000;
+    font-size: 1.2em;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 20px;
+    font-weight: bold;
   }
   .reserve-button:hover {
     background: #ffd700;
   }
   .info {
-    max-width: 800px; margin: 40px auto; text-align: center;
-    background: white; padding: 20px; border-radius: 8px;
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
   }
   .info h3 {
     font-family: 'Fredoka One', cursive;
     font-size: 2em;
   }
   footer {
-    text-align: center; font-size: 0.9em;
-    color: #666; margin: 40px 0 20px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    margin: 40px 0 20px;
   }
+
   /* Styles de la modale et de la grille */
-  #duckModal { display: none; position: fixed; z-index: 1000; left:0; top:0; width:100%; height:100%; overflow-y:auto; background: rgba(0,0,0,0.8); }
+  #duckModal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow-y:auto; background:rgba(0,0,0,0.8); }
   #duckModal .modal-content { background:#fff8d6; margin:5% auto; padding:20px; border-radius:8px; max-width:900px; position:relative; }
   #duckModal .close { position:absolute; top:10px; right:20px; font-size:1.8em; cursor:pointer; }
 
-  .duck-grid { position: relative; width: 100%; height: auto; }
-  .duck-grid img { width: 100%; display: block; }
-  .duck { position: absolute; cursor: pointer; }
-  .duck.reserved { background-color: rgba(255,0,0,0.4); pointer-events:none; }
-  .duck.selected { background-color: rgba(255,255,0,0.4); }
-  #selection { margin-top: 15px; font-size: 1.1em; }
-  #selection span { font-weight: bold; }
+  .duck-grid { position:relative; width:100%; height:auto; }
+  .duck-grid img { width:100%; display:block; }
+  .duck { position:absolute; cursor:pointer; }
+  .duck.reserved { background:rgba(255,0,0,0.4); pointer-events:none; }
+  .duck.selected { background:rgba(255,255,0,0.4); }
+
+  #selection { margin-top:15px; font-size:1.1em; }
+  #selection span { font-weight:bold; }
+
+  /* Fenêtre de confirmation */
+  #confirmModal { display:none; position:fixed; z-index:1100; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); }
+  #confirmModal .content { background:#fff8d6; margin:10% auto; padding:20px; max-width:600px; border-radius:8px; position:relative; }
+  #confirmModal .close { position:absolute; top:10px; right:20px; font-size:1.8em; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -82,9 +109,9 @@
 </header>
 
 <div class="hero">
-  <img src="img/affiche-courses.jpg" alt="Course des Canards" style="width: 100%; display: block; margin: 0; padding: 0;">
+  <img src="img/affiche-course.jpg" alt="Course des Canards" style="width: 100%; display: block; margin: 0;">
   <h2>La course la plus fun de l'année !</h2>
-  <p>2€/mise — nombreux prix pour le podium — Entrée libre !</p>
+  <p>2 €/mise — nombreux prix pour le podium — Entrée libre !</p>
   <a href="#reserve" class="reserve-button" id="reserve-button">🐥 Réserver mon canard</a>
 </div>
 
@@ -98,68 +125,92 @@
   &copy; 2025 Grizzlies Dodgeball Club — Site propulsé par GitHub Pages
 </footer>
 
-<!-- Fenêtre modale -->
+<!-- Fenêtre modale principale -->
 <div id="duckModal">
   <div class="modal-content">
     <span class="close" id="closeModal">&times;</span>
     <h3>Choisissez vos canards (2 € chacun)</h3>
     <div class="duck-grid" id="duckGrid">
       <img src="img/320-canards-jaunes.png" alt="320 canards">
-      <!-- Les zones cliquables seront ajoutées en JavaScript -->
     </div>
     <div id="selection">
       Canards sélectionnés : <span id="selectedNumbers">aucun</span><br>
       Total : <span id="totalCost">0 €</span>
     </div>
-    <button id="commander" style="margin-top:15px;padding:10px 20px;font-size:1.2em;">Commander</button>
+
+    <!-- Formulaire de paiement -->
+    <div id="paiement">
+      <p><strong>Méthode de paiement :</strong></p>
+      <label><input type="radio" name="payment" value="virement" checked> Par virement</label><br>
+      <label><input type="radio" name="payment" value="espece"> En espèces le jour de l'évènement</label>
+
+      <p style="margin-top:10px;">
+        <label>Votre e‑mail :<br>
+          <input type="email" id="email" required style="width:100%; padding:5px;">
+        </label>
+      </p>
+      <p><label><input type="checkbox" id="notifyNextYear"> Envoyez‑moi un mail l'année prochaine pour me prévenir de la 5ᵉ édition</label></p>
+      <p><label><input type="checkbox" id="sendPaymentInfo"> Envoyez‑moi les informations de paiement par mail</label></p>
+    </div>
+
+    <button id="finaliser" style="margin-top:15px;padding:10px 20px;font-size:1.2em;">Finaliser ma commande</button>
+  </div>
+</div>
+
+<!-- Fenêtre de confirmation -->
+<div id="confirmModal">
+  <div class="content">
+    <span class="close" id="closeConfirm">&times;</span>
+    <h3>Confirmation de votre commande</h3>
+    <p id="confirmText"></p>
   </div>
 </div>
 
 <script>
-  // Remplacez les numéros ci-dessous par ceux déjà réservés
-  const reservedNumbers = []; // Ex : [12, 45, 78]
-  const rows = 17;    // nombre de lignes (17 lignes pour 320 canards, les 3 derniers sont retirés)
-  const cols = 19;    // nombre de colonnes
-  const removed = [321, 322, 323]; // positions retirées
+  // Liste des numéros déjà réservés (à remplir selon vos réservations)
+  const reservedNumbers = [];
+  const rows    = 17;
+  const cols    = 19;
+  const removed = [321, 322, 323]; // canards retirés
 
-  const reserveBtn   = document.getElementById('reserve-button');
-  const modal        = document.getElementById('duckModal');
-  const closeModal   = document.getElementById('closeModal');
-  const duckGrid     = document.getElementById('duckGrid');
-  const selectedSpan = document.getElementById('selectedNumbers');
-  const totalSpan    = document.getElementById('totalCost');
-  const commanderBtn = document.getElementById('commander');
+  const reserveBtn    = document.getElementById('reserve-button');
+  const modal         = document.getElementById('duckModal');
+  const closeModalBtn = document.getElementById('closeModal');
+  const duckGrid      = document.getElementById('duckGrid');
+  const selectedSpan  = document.getElementById('selectedNumbers');
+  const totalSpan     = document.getElementById('totalCost');
+  const finaliserBtn  = document.getElementById('finaliser');
+
+  const confirmModal  = document.getElementById('confirmModal');
+  const closeConfirm  = document.getElementById('closeConfirm');
+  const confirmText   = document.getElementById('confirmText');
 
   let selected = [];
 
-  // Ouvrir la modale
+  // Ouvrir la modale principale
   reserveBtn.addEventListener('click', function(e) {
     e.preventDefault();
     modal.style.display = 'block';
-    // Générer la grille au premier affichage
     if (!duckGrid.dataset.generated) {
       generateGrid();
       duckGrid.dataset.generated = 'true';
     }
   });
 
-  // Fermer la modale
-  closeModal.addEventListener('click', function() {
-    modal.style.display = 'none';
-  });
+  // Fermer la modale principale
+  closeModalBtn.addEventListener('click', function() { modal.style.display = 'none'; });
   window.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-    }
+    if (e.target === modal) modal.style.display = 'none';
+    if (e.target === confirmModal) confirmModal.style.display = 'none';
   });
 
+  // Générer la grille des canards
   function generateGrid() {
-    // Ajuster la hauteur de la grille proportionnellement
     const gridWidth  = duckGrid.offsetWidth;
     const gridHeight = gridWidth * (rows / cols);
     duckGrid.style.height = gridHeight + 'px';
     for (let i = 1; i <= rows * cols; i++) {
-      if (removed.includes(i)) continue; // ignorer les positions retirées
+      if (removed.includes(i)) continue;
       const div = document.createElement('div');
       div.classList.add('duck');
       const row = Math.floor((i - 1) / cols);
@@ -198,22 +249,54 @@
     if (selected.length === 0) {
       selectedSpan.textContent = 'aucun';
     } else {
-      selectedSpan.textContent = selected.slice().sort(function(a, b) { return a - b; }).join(', ');
+      selectedSpan.textContent = selected.slice().sort(function(a,b){return a-b;}).join(', ');
     }
     totalSpan.textContent = (selected.length * 2) + ' €';
   }
 
-  commanderBtn.addEventListener('click', function() {
+  // Cliquer sur finaliser
+  finaliserBtn.addEventListener('click', function() {
     if (selected.length === 0) {
       alert("Vous n'avez sélectionné aucun canard.");
-    } else {
-      alert(
-        "Canards sélectionnés : " + selected.join(', ') +
-        "\nTotal : " + (selected.length * 2) + "€" +
-        "\n(Intégrez ici votre logique de commande ou de paiement.)"
-      );
+      return;
     }
+    const emailField = document.getElementById('email');
+    const email      = emailField.value.trim();
+    if (email === "") {
+      alert("Veuillez saisir votre adresse e‑mail.");
+      emailField.focus();
+      return;
+    }
+    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+    const notifyNextYear  = document.getElementById('notifyNextYear').checked;
+    const sendPaymentInfo = document.getElementById('sendPaymentInfo').checked;
+
+    let message  = "Vous avez réservé les canards : " + selected.slice().sort(function(a,b){return a-b;}).join(', ');
+    message     += "<br>Total : " + (selected.length * 2) + " €";
+    message     += "<br>Méthode de paiement : " + (paymentMethod === "virement" ? "Par virement" : "En espèces le jour de l'évènement");
+
+    if (paymentMethod === "virement") {
+      message += "<br><br><strong>Veuillez effectuer votre virement à :</strong><br>";
+      message += "IBAN : BE00 0000 0000 0000<br>BIC : ABCDBEBE<br>Communication : Course des canards + votre nom";
+    }
+
+    message += "<br><br>Un e‑mail de confirmation sera envoyé à : " + email;
+    if (notifyNextYear) {
+      message += "<br>• Vous recevrez une invitation pour la 5ᵉ édition l'année prochaine.";
+    }
+    if (sendPaymentInfo) {
+      message += "<br>• Les informations de paiement vous seront renvoyées par e‑mail.";
+    }
+
+    confirmText.innerHTML = message;
+    confirmModal.style.display = 'block';
   });
+
+  // Fermer la modale de confirmation
+  closeConfirm.addEventListener('click', function() {
+    confirmModal.style.display = 'none';
+  });
+
 </script>
 
 </body>
