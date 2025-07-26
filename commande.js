@@ -154,7 +154,7 @@ finaliserBtn.addEventListener('click', async function () {
   if (!paymentMethod) {
     alert("Veuillez sélectionner un mode de paiement.");
     return;
-  }
+  
 
 const formData = new FormData();
 formData.append("numeros", JSON.stringify(selected));
