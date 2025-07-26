@@ -126,26 +126,32 @@ function updateSummary() {
 }
 
 // Finaliser la commande : validation, envoi à Apps Script puis affichage de la confirmation
-finaliserBtn.addEventListener('click', async function() {
-  if (selected.length === 0) {
-    alert("Vous n'avez sélectionné aucun canard.");
-    return;
-  }
-  const emailField = document.getElementById('email');
-  const email = emailField.value.trim();
-  if (email === "") {
-    alert("Veuillez saisir votre adresse e‑mail.");
-    emailField.focus();
-    return;
-  }
-  const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-  const notifyNextYear  = document.getElementById('notifyNextYear').checked;
-  const sendPaymentInfo = document.getElementById('sendPaymentInfo').checked;
+finaliserBtn.addEventListener('click', async function () {
+  // Récupération des infos utilisateur
+  const emailInput = document.getElementById('email');
+  const email = emailInput.value.trim();
+  const paymentMethod = document.querySelector('input[name="paiement"]:checked')?.value;
+  const notifyNextYear = document.getElementById('notifyCheckbox').checked;
+  const sendPaymentInfo = document.getElementById('paymentInfoCheckbox').checked;
 
-  // Préparer les données à envoyer
+  // Vérifications
+  if (selected.length === 0) {
+    alert("Veuillez sélectionner au moins un canard.");
+    return;
+  }
+  if (!email || !email.includes('@')) {
+    alert("Veuillez entrer une adresse email valide.");
+    return;
+  }
+  if (!paymentMethod) {
+    alert("Veuillez sélectionner un mode de paiement.");
+    return;
+  }
+
+  // Construction des données à envoyer
   const payload = {
     numeros: selected,
-    nom: '',              // ajoutez ici un champ nom/prénom si vous le souhaitez
+    nom: '', // À compléter si tu ajoutes un champ nom
     email: email,
     moyenPaiement: paymentMethod,
     notifyNextYear: notifyNextYear,
@@ -153,34 +159,27 @@ finaliserBtn.addEventListener('click', async function() {
   };
 
   try {
-    // Envoi à Apps Script (enregistre la commande dans Google Sheets)
-    const response = await fetch(scriptURL, {
+    await fetch(scriptURL, {
       method: 'POST',
-      mode: 'no-cors',
+      mode: 'no-cors', // permet d’envoyer sans erreur CORS mais sans lire la réponse
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    const result = await response.json();
-    console.log('Réponse Apps Script :', result);
 
-    // Rafraîchir les statuts pour colorer les canards désormais réservés
-    await chargerStatuts();
-
-    // Masquer la modale principale
+    await chargerStatuts(); // Mise à jour des canards réservés
     modal.style.display = 'none';
-
-    // Afficher la confirmation
     showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo);
-
-    // Réinitialiser la sélection pour la prochaine commande
     selected = [];
     updateSummary();
-
   } catch (err) {
-    alert("Une erreur est survenue lors de l'enregistrement de votre commande.");
-    console.error(err);
+    console.warn("La requête a été envoyée, mais la réponse n'a pas pu être lue :", err);
+    modal.style.display = 'none';
+    showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo);
+    selected = [];
+    updateSummary();
   }
 });
+
 
 // Construire et afficher le récapitulatif de confirmation
 function showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo) {
