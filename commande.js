@@ -156,15 +156,16 @@ finaliserBtn.addEventListener('click', async function () {
     return;
   }
 
-const payload = {
-  numeros: selected,
-  prenom: prenom,
-  nom: nom,
-  email: email,
-  participation: participation,
-  moyenPaiement: paymentMethod,
-  notifyNextYear: notifyNextYear,
-  sendPaymentInfo: sendPaymentInfo,
+const formData = new FormData();
+formData.append("numeros", JSON.stringify(selected));
+formData.append("prenom", prenom);
+formData.append("nom", nom);
+formData.append("email", email);
+formData.append("participation", participation ? "Présent" : "Absent");
+formData.append("moyenPaiement", paymentMethod);
+formData.append("notifyNextYear", notifyNextYear ? "Oui" : "Non");
+formData.append("sendPaymentInfo", sendPaymentInfo ? "Oui" : "Non");
+
 };
 
 
@@ -173,8 +174,7 @@ const payload = {
     await fetch(scriptURL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: formData
     });
   } catch (err) {
     // L’erreur ici n’indique pas un échec de la requête, donc on log juste un warning
