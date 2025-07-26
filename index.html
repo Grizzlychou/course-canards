@@ -53,16 +53,16 @@
     <!-- Formulaire de paiement -->
     <div id="paiement">
       <p><strong>Méthode de paiement :</strong></p>
-      <label><input type="radio" name="payment" value="virement" checked> Par virement</label><br>
-      <label><input type="radio" name="payment" value="espece"> En espèces le jour de l'évènement</label>
+      <label><input type="radio" name="paiement" value="virement" checked> Par virement</label><br>
+      <label><input type="radio" name="paiement" value="espece"> En espèces le jour de l'évènement</label>
 
       <p style="margin-top:10px;">
         <label>Votre e‑mail :<br>
           <input type="email" id="email" required style="width:100%; padding:5px;">
         </label>
       </p>
-      <p><label><input type="checkbox" id="notifyNextYear"> Envoyez‑moi un mail l'année prochaine pour me prévenir de la 5ᵉ édition</label></p>
-      <p><label><input type="checkbox" id="sendPaymentInfo"> Envoyez‑moi les informations de paiement par mail</label></p>
+      <p><label><input type="checkbox" id="notifyCheckbox"> Envoyez‑moi un mail l'année prochaine pour me prévenir de la 5ᵉ édition</label></p>
+      <p><label><input type="checkbox" id="paymentInfoCheckbox"> Envoyez‑moi les informations de paiement par mail</label></p>
     </div>
     <button id="finaliser" style="margin-top:15px;padding:10px 20px;font-size:1.2em;">Finaliser ma commande</button>
   </div>
