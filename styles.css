@@ -39,12 +39,15 @@ header p {
 
 
 .hero-overlay {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(255, 255, 255, 0.9); /* ou avec blur si tu veux */
+  width: 90%;
+  max-width: 800px;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  margin-top: 200px; /* 👈 décale le panneau vers le bas */
 }
+
 
 
 .hero-text {
