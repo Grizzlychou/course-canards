@@ -132,6 +132,13 @@ finaliserBtn.addEventListener('click', async function () {
   const paymentMethod = document.querySelector('input[name="paiement"]:checked')?.value;
   const notifyCheckbox = document.getElementById('notifyCheckbox');
   const paymentInfoCheckbox = document.getElementById('paymentInfoCheckbox');
+  const prenomInput = document.getElementById('prenom');
+  const nomInput = document.getElementById('nom');
+  const participationCheckbox = document.getElementById('participation');
+
+  const prenom = prenomInput ? prenomInput.value.trim() : '';
+  const nom = nomInput ? nomInput.value.trim() : '';
+  const participation = participationCheckbox ? participationCheckbox.checked : false;
 
   const notifyNextYear = notifyCheckbox ? notifyCheckbox.checked : false;
   const sendPaymentInfo = paymentInfoCheckbox ? paymentInfoCheckbox.checked : false;
@@ -149,14 +156,17 @@ finaliserBtn.addEventListener('click', async function () {
     return;
   }
 
-  const payload = {
-    numeros: selected,
-    nom: '', // À compléter si besoin
-    email: email,
-    moyenPaiement: paymentMethod,
-    notifyNextYear: notifyNextYear,
-    sendPaymentInfo: sendPaymentInfo
-  };
+const payload = {
+  numeros: selected,
+  prenom: prenom,
+  nom: nom,
+  email: email,
+  moyenPaiement: paymentMethod,
+  notifyNextYear: notifyNextYear,
+  sendPaymentInfo: sendPaymentInfo,
+  participation: participation
+};
+
 
   // On ignore l'erreur de lecture de réponse, et on continue quoi qu'il arrive
   try {
