@@ -165,7 +165,6 @@ formData.append("participation", participation ? "Présent" : "Absent");
 formData.append("moyenPaiement", paymentMethod);
 formData.append("notifyNextYear", notifyNextYear ? "Oui" : "Non");
 formData.append("sendPaymentInfo", sendPaymentInfo ? "Oui" : "Non");
-
 });
 
 
