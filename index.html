@@ -15,10 +15,10 @@
     padding: 20px; color: #000; font-family: 'Fredoka One', cursive;
   }
   header h1 {
-    font-size: 3em; margin: 0;
+    font-size: 2.5em; margin: 0;
   }
   header p {
-    margin: 5px 0 0; font-size: 1.2em;
+    margin: 5px 0 0; font-size: 1.5em;
   }
   .hero {
     background: linear-gradient(#a6e1fa, #7cd1c0);
@@ -57,16 +57,28 @@
     text-align: center; font-size: 0.9em;
     color: #666; margin: 40px 0 20px;
   }
+  /* Styles de la modale et de la grille */
+  #duckModal { display: none; position: fixed; z-index: 1000; left:0; top:0; width:100%; height:100%; overflow-y:auto; background: rgba(0,0,0,0.8); }
+  #duckModal .modal-content { background:#fff8d6; margin:5% auto; padding:20px; border-radius:8px; max-width:900px; position:relative; }
+  #duckModal .close { position:absolute; top:10px; right:20px; font-size:1.8em; cursor:pointer; }
+
+  .duck-grid { position: relative; width: 100%; height: auto; }
+  .duck-grid img { width: 100%; display: block; }
+  .duck { position: absolute; cursor: pointer; }
+  .duck.reserved { background-color: rgba(255,0,0,0.4); pointer-events:none; }
+  .duck.selected { background-color: rgba(255,255,0,0.4); }
+  #selection { margin-top: 15px; font-size: 1.1em; }
+  #selection span { font-weight: bold; }
 </style>
 </head>
 <body>
 
-<header style="background: #ffe600; text-align: center; padding: 20px; color: #000; font-family: 'Fredoka One', cursive;">
-  <h1 style="font-size: 2.5em; margin: 0;">Le Grizzlies Dodgeball Club de Jodoigne</h1>
+<header>
+  <h1>Le Grizzlies Dodgeball Club de Jodoigne</h1>
   <div style="margin: 15px 0;">
     <img src="img/logo-grizzlies.png" alt="Logo Grizzlies" style="height: 100px;">
   </div>
-  <p style="font-size: 1.5em; margin: 0;">organise</p>
+  <p>organise</p>
 </header>
 
 <div class="hero">
@@ -75,8 +87,6 @@
   <p>2€/mise — nombreux prix pour le podium — Entrée libre !</p>
   <a href="#reserve" class="reserve-button" id="reserve-button">🐥 Réserver mon canard</a>
 </div>
-
-
 
 <div class="info">
   <h3>Comment participer ?</h3>
@@ -87,6 +97,7 @@
 <footer>
   &copy; 2025 Grizzlies Dodgeball Club — Site propulsé par GitHub Pages
 </footer>
+
 <!-- Fenêtre modale -->
 <div id="duckModal">
   <div class="modal-content">
@@ -103,27 +114,13 @@
     <button id="commander" style="margin-top:15px;padding:10px 20px;font-size:1.2em;">Commander</button>
   </div>
 </div>
-<style>
-  /* Styles de la modale et de la grille */
-  #duckModal { display: none; position: fixed; z-index: 1000; left:0; top:0; width:100%; height:100%; overflow-y:auto; background: rgba(0,0,0,0.8); }
-  #duckModal .modal-content { background:#fff8d6; margin:5% auto; padding:20px; border-radius:8px; max-width:900px; position:relative; }
-  #duckModal .close { position:absolute; top:10px; right:20px; font-size:1.8em; cursor:pointer; }
-
-  .duck-grid { position: relative; width: 100%; height: auto; }
-  .duck-grid img { width: 100%; display: block; }
-  .duck { position: absolute; cursor: pointer; }
-  .duck.reserved { background-color: rgba(255,0,0,0.4); pointer-events:none; }
-  .duck.selected { background-color: rgba(255,255,0,0.4); }
-  #selection { margin-top: 15px; font-size: 1.1em; }
-  #selection span { font-weight: bold; }
-</style>
 
 <script>
   // Remplacez les numéros ci-dessous par ceux déjà réservés
-  const reservedNumbers = [/* exemple : 12, 45, 78 */];
-  const rows = 17;    // nombre de lignes
+  const reservedNumbers = []; // Ex : [12, 45, 78]
+  const rows = 17;    // nombre de lignes (17 lignes pour 320 canards, les 3 derniers sont retirés)
   const cols = 19;    // nombre de colonnes
-  const removed = [321, 322, 323]; // canards retirés
+  const removed = [321, 322, 323]; // positions retirées
 
   const reserveBtn   = document.getElementById('reserve-button');
   const modal        = document.getElementById('duckModal');
@@ -147,11 +144,17 @@
   });
 
   // Fermer la modale
-  closeModal.addEventListener('click', () => modal.style.display = 'none');
-  window.addEventListener('click', (e) => { if (e.target == modal) modal.style.display = 'none'; });
+  closeModal.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+  window.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
 
   function generateGrid() {
-    // Ajuster la hauteur de la grille en fonction de l'image
+    // Ajuster la hauteur de la grille proportionnellement
     const gridWidth  = duckGrid.offsetWidth;
     const gridHeight = gridWidth * (rows / cols);
     duckGrid.style.height = gridHeight + 'px';
@@ -179,14 +182,14 @@
     }
   }
 
-  function toggleSelection(num, el) {
-    const idx = selected.indexOf(num);
-    if (idx > -1) {
-      selected.splice(idx, 1);
-      el.classList.remove('selected');
+  function toggleSelection(number, element) {
+    const index = selected.indexOf(number);
+    if (index > -1) {
+      selected.splice(index, 1);
+      element.classList.remove('selected');
     } else {
-      selected.push(num);
-      el.classList.add('selected');
+      selected.push(number);
+      element.classList.add('selected');
     }
     updateSummary();
   }
@@ -195,16 +198,20 @@
     if (selected.length === 0) {
       selectedSpan.textContent = 'aucun';
     } else {
-      selectedSpan.textContent = selected.slice().sort((a,b) => a-b).join(', ');
+      selectedSpan.textContent = selected.slice().sort(function(a, b) { return a - b; }).join(', ');
     }
     totalSpan.textContent = (selected.length * 2) + ' €';
   }
 
-  commanderBtn.addEventListener('click', () => {
+  commanderBtn.addEventListener('click', function() {
     if (selected.length === 0) {
-      alert('Vous n\\'avez sélectionné aucun canard.');
+      alert("Vous n'avez sélectionné aucun canard.");
     } else {
-      alert('Canards sélectionnés : ' + selected.join(', ') + '\\nTotal : ' + (selected.length * 2) + '€\\n(Intégrez ici votre logique de commande ou de paiement.)');
+      alert(
+        "Canards sélectionnés : " + selected.join(', ') +
+        "\nTotal : " + (selected.length * 2) + "€" +
+        "\n(Intégrez ici votre logique de commande ou de paiement.)"
+      );
     }
   });
 </script>
