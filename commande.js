@@ -1,12 +1,15 @@
-// Liste des numéros déjà réservés (à remplir selon vos réservations existantes)
+// URL de votre Web App Apps Script (déploiement "Web App")
+const scriptURL = 'https://script.google.com/macros/s/AKfycby47wFzKyuN5N_82DGX5uCds4VK8zgTdAWF2B9-sNMLGD8K8VTGcNcnT8dW7_48azeg/exec';
+
+// Liste des numéros déjà réservés (sera remplie en appelant chargerStatuts)
 const reservedNumbers = [];
 
-// Paramètres de la grille (17 lignes × 19 colonnes = 323 positions, dont trois retirées)
+// Paramètres de la grille : 17 lignes × 19 colonnes = 323 positions
 const rows    = 17;
 const cols    = 19;
-const removed = [321, 322, 323]; // numéros de canards supprimés (laissés vides)
+const removed = [321, 322, 323]; // numéros retirés
 
-// Sélection des éléments du DOM
+// Références aux éléments du DOM
 const reserveBtn    = document.getElementById('reserve-button');
 const modal         = document.getElementById('duckModal');
 const closeModalBtn = document.getElementById('closeModal');
@@ -19,27 +22,44 @@ const confirmModal  = document.getElementById('confirmModal');
 const closeConfirm  = document.getElementById('closeConfirm');
 const confirmText   = document.getElementById('confirmText');
 
-// Tableau pour stocker les numéros sélectionnés
+// Tableau de numéros sélectionnés par l’utilisateur
 let selected = [];
 
-/* --- Fonctions principales --- */
+/* ------------------- Fonctions ------------------- */
 
-// Ouvrir la fenêtre modale lorsqu’on clique sur “Réserver mon canard”
-reserveBtn.addEventListener('click', function(e) {
+// Chargement des statuts depuis Google Sheets pour marquer les canards réservés
+async function chargerStatuts() {
+  reservedNumbers.length = 0;
+  try {
+    const response = await fetch(scriptURL);
+    const rowsData = await response.json();
+    rowsData.forEach(row => {
+      if (row.Statut && row.Statut.toLowerCase() !== 'disponible') {
+        reservedNumbers.push(parseInt(row.Numero, 10));
+      }
+    });
+  } catch (err) {
+    console.error('Erreur lors du chargement des statuts :', err);
+  }
+}
+
+// Affiche la modale principale et génère la grille la première fois
+reserveBtn.addEventListener('click', async function(e) {
   e.preventDefault();
   modal.style.display = 'block';
-  // Générer la grille la première fois uniquement
   if (!duckGrid.dataset.generated) {
+    await chargerStatuts();       // récupérer les canards déjà réservés
     generateGrid();
     duckGrid.dataset.generated = 'true';
   }
 });
 
-// Fermer la modale en cliquant sur la croix
+// Fermer la modale principale
 closeModalBtn.addEventListener('click', function() {
   modal.style.display = 'none';
 });
-// Fermer la modale si l’on clique en dehors du contenu
+
+// Fermer les modales si on clique en dehors
 window.addEventListener('click', function(e) {
   if (e.target === modal) {
     modal.style.display = 'none';
@@ -49,19 +69,17 @@ window.addEventListener('click', function(e) {
   }
 });
 
-// Générer la grille de canards et positionner les zones cliquables
+// Génération de la grille cliquable
 function generateGrid() {
   const gridWidth  = duckGrid.offsetWidth;
   const gridHeight = gridWidth * (rows / cols);
   duckGrid.style.height = gridHeight + 'px';
 
   for (let i = 1; i <= rows * cols; i++) {
-    if (removed.includes(i)) continue; // laisser vide les numéros retirés
-
+    if (removed.includes(i)) continue;
     const div = document.createElement('div');
     div.classList.add('duck');
 
-    // Calculer la position du canard en pourcentage
     const row = Math.floor((i - 1) / cols);
     const col = (i - 1) % cols;
     const wPercent = 100 / cols;
@@ -73,57 +91,46 @@ function generateGrid() {
     div.style.top    = (row * hPercent) + '%';
 
     if (reservedNumbers.includes(i)) {
-      // Canard déjà réservé : on le colore en rouge et on désactive le clic
       div.classList.add('reserved');
     } else {
-      // Sinon, on ajoute un gestionnaire de clic pour sélectionner/désélectionner
       div.addEventListener('click', function() {
         toggleSelection(i, div);
       });
     }
-
     duckGrid.appendChild(div);
   }
 }
 
-// Sélectionner ou désélectionner un canard
-function toggleSelection(number, element) {
-  const index = selected.indexOf(number);
+// Sélection ou désélection d’un canard
+function toggleSelection(num, el) {
+  const index = selected.indexOf(num);
   if (index > -1) {
-    // Si déjà sélectionné, on l’enlève
     selected.splice(index, 1);
-    element.classList.remove('selected');
+    el.classList.remove('selected');
   } else {
-    // Sinon, on l’ajoute
-    selected.push(number);
-    element.classList.add('selected');
+    selected.push(num);
+    el.classList.add('selected');
   }
   updateSummary();
 }
 
-// Mettre à jour le récapitulatif des canards sélectionnés et le total
+// Mise à jour du récapitulatif et du montant total
 function updateSummary() {
   if (selected.length === 0) {
     selectedSpan.textContent = 'aucun';
   } else {
-    // Afficher les numéros triés
-    const sorted = selected.slice().sort(function(a, b) { return a - b; });
+    const sorted = selected.slice().sort((a,b) => a - b);
     selectedSpan.textContent = sorted.join(', ');
   }
-  // 2 € par canard
   totalSpan.textContent = (selected.length * 2) + ' €';
 }
 
-/* --- Gestion du formulaire et de la confirmation --- */
-
-// Lorsque l’on clique sur “Finaliser ma commande”
-finaliserBtn.addEventListener('click', function() {
-  // Vérifier qu’il y a au moins un canard sélectionné
+// Finaliser la commande : validation, envoi à Apps Script puis affichage de la confirmation
+finaliserBtn.addEventListener('click', async function() {
   if (selected.length === 0) {
     alert("Vous n'avez sélectionné aucun canard.");
     return;
   }
-  // Vérifier l’e-mail
   const emailField = document.getElementById('email');
   const email = emailField.value.trim();
   if (email === "") {
@@ -131,19 +138,57 @@ finaliserBtn.addEventListener('click', function() {
     emailField.focus();
     return;
   }
-  // Récupérer la méthode de paiement choisie
   const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-  // Récupérer les options de notification
   const notifyNextYear  = document.getElementById('notifyNextYear').checked;
   const sendPaymentInfo = document.getElementById('sendPaymentInfo').checked;
 
-  // Construire le message de confirmation
+  // Préparer les données à envoyer
+  const payload = {
+    numeros: selected,
+    nom: '',              // ajoutez ici un champ nom/prénom si vous le souhaitez
+    email: email,
+    moyenPaiement: paymentMethod,
+    notifyNextYear: notifyNextYear,
+    sendPaymentInfo: sendPaymentInfo
+  };
+
+  try {
+    // Envoi à Apps Script (enregistre la commande dans Google Sheets)
+    const response = await fetch(scriptURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json();
+    console.log('Réponse Apps Script :', result);
+
+    // Rafraîchir les statuts pour colorer les canards désormais réservés
+    await chargerStatuts();
+
+    // Masquer la modale principale
+    modal.style.display = 'none';
+
+    // Afficher la confirmation
+    showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo);
+
+    // Réinitialiser la sélection pour la prochaine commande
+    selected = [];
+    updateSummary();
+
+  } catch (err) {
+    alert("Une erreur est survenue lors de l'enregistrement de votre commande.");
+    console.error(err);
+  }
+});
+
+// Construire et afficher le récapitulatif de confirmation
+function showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo) {
   let message  = "Vous avez réservé les canards : " +
-    selected.slice().sort(function(a,b){return a-b;}).join(', ');
+    selected.slice().sort((a,b) => a - b).join(', ');
   message += "<br>Total : " + (selected.length * 2) + " €";
   message += "<br>Méthode de paiement : " +
-    (paymentMethod === "virement" ? "Par virement" : "En espèces le jour de l'évènement");
-  if (paymentMethod === "virement") {
+    (paymentMethod === 'virement' ? 'Par virement' : 'En espèces le jour de l\'évènement')";
+  if (paymentMethod === 'virement') {
     message += "<br><br><strong>Veuillez effectuer votre virement à :</strong><br>";
     message += "IBAN : BE00 0000 0000 0000<br>BIC : ABCDBEBE<br>Communication : Course des canards + votre nom";
   }
@@ -154,11 +199,9 @@ finaliserBtn.addEventListener('click', function() {
   if (sendPaymentInfo) {
     message += "<br>• Les informations de paiement vous seront renvoyées par e‑mail.";
   }
-
-  // Afficher la modale de confirmation avec ce message
   confirmText.innerHTML = message;
   confirmModal.style.display = 'block';
-});
+}
 
 // Fermer la modale de confirmation
 closeConfirm.addEventListener('click', function() {
