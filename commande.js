@@ -161,7 +161,7 @@ formData.append("numeros", JSON.stringify(selected));
 formData.append("prenom", prenom);
 formData.append("nom", nom);
 formData.append("email", email);
-formData.append("participation", participation ? "Présent" : "Absent");
+formData.append("participation", participation);
 formData.append("moyenPaiement", paymentMethod);
 formData.append("notifyNextYear", notifyNextYear ? "Oui" : "Non");
 formData.append("sendPaymentInfo", sendPaymentInfo ? "Oui" : "Non");
