@@ -130,8 +130,11 @@ finaliserBtn.addEventListener('click', async function () {
   const emailInput = document.getElementById('email');
   const email = emailInput.value.trim();
   const paymentMethod = document.querySelector('input[name="paiement"]:checked')?.value;
-  const notifyNextYear = document.getElementById('notifyCheckbox').checked;
-  const sendPaymentInfo = document.getElementById('paymentInfoCheckbox').checked;
+  const notifyCheckbox = document.getElementById('notifyCheckbox');
+  const paymentInfoCheckbox = document.getElementById('paymentInfoCheckbox');
+
+  const notifyNextYear = notifyCheckbox ? notifyCheckbox.checked : false;
+  const sendPaymentInfo = paymentInfoCheckbox ? paymentInfoCheckbox.checked : false;
 
   if (selected.length === 0) {
     alert("Veuillez sélectionner au moins un canard.");
