@@ -166,7 +166,7 @@ formData.append("moyenPaiement", paymentMethod);
 formData.append("notifyNextYear", notifyNextYear ? "Oui" : "Non");
 formData.append("sendPaymentInfo", sendPaymentInfo ? "Oui" : "Non");
 
-};
+});
 
 
   // On ignore l'erreur de lecture de réponse, et on continue quoi qu'il arrive
