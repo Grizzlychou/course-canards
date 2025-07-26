@@ -154,7 +154,7 @@ finaliserBtn.addEventListener('click', async function () {
   if (!paymentMethod) {
     alert("Veuillez sélectionner un mode de paiement.");
     return;
-  
+  }
 
 const formData = new FormData();
 formData.append("numeros", JSON.stringify(selected));
@@ -165,7 +165,6 @@ formData.append("participation", participation ? "Présent" : "Absent");
 formData.append("moyenPaiement", paymentMethod);
 formData.append("notifyNextYear", notifyNextYear ? "Oui" : "Non");
 formData.append("sendPaymentInfo", sendPaymentInfo ? "Oui" : "Non");
-});
 
 
   // On ignore l'erreur de lecture de réponse, et on continue quoi qu'il arrive
