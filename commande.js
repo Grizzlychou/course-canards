@@ -156,6 +156,7 @@ finaliserBtn.addEventListener('click', async function() {
     // Envoi à Apps Script (enregistre la commande dans Google Sheets)
     const response = await fetch(scriptURL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
