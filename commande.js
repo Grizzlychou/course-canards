@@ -207,7 +207,7 @@ function showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo)
   // Si virement, ajouter les coordonnées bancaires
   if (paymentMethod === 'virement') {
     message += "<br><br><strong>Veuillez effectuer votre virement à :</strong><br>";
-    message += "IBAN : BE00 0000 0000 0000<br>BIC : ABCDBEBE<br>Communication : Course des canards + votre nom";
+    message += "IBAN : BE04 0634 0580 8831<br>Communication : Course des canards + votre nom";
   }
 
   // Ajouter l'adresse e-mail
