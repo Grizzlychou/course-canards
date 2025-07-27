@@ -218,7 +218,7 @@ function showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo)
     message += "<br>• Vous recevrez une invitation pour la prochaine édition.";
   }
   if (sendPaymentInfo) {
-    message += "<br>• Les informations de paiement vous seront renvoyées par e‑mail.";
+    message += "<br>• Vous recevrez une invitation pour une initiation au Dogeball avec le DBC de Jodoigne ";
   }
 
   // Afficher le message dans la fenêtre de confirmation
