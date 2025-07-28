@@ -125,8 +125,12 @@ function updateSummary() {
   totalSpan.textContent = (selected.length * 2) + ' €';
 }
 
-// Finaliser la commande : validation, envoi à Apps Script puis affichage de la confirmation
 finaliserBtn.addEventListener('click', async function () {
+  // Empêche les clics multiples
+  finaliserBtn.disabled = true;
+  const originalText = finaliserBtn.textContent;
+  finaliserBtn.textContent = 'Traitement en cours...';
+
   const emailInput = document.getElementById('email');
   const email = emailInput.value.trim();
   const paymentMethod = document.querySelector('input[name="paiement"]:checked')?.value;
@@ -143,16 +147,22 @@ finaliserBtn.addEventListener('click', async function () {
 
   if (selected.length === 0) {
     alert("Veuillez sélectionner au moins un canard.");
+    finaliserBtn.disabled = false;
+    finaliserBtn.textContent = originalText;
     return;
   }
 
   if (!email || !email.includes('@')) {
     alert("Veuillez entrer une adresse email valide.");
+    finaliserBtn.disabled = false;
+    finaliserBtn.textContent = originalText;
     return;
   }
 
   if (!paymentMethod) {
     alert("Veuillez sélectionner un mode de paiement.");
+    finaliserBtn.disabled = false;
+    finaliserBtn.textContent = originalText;
     return;
   }
 
@@ -185,6 +195,10 @@ finaliserBtn.addEventListener('click', async function () {
   showConfirmation(paymentMethod, email, notifyNextYear, initiation);
   selected = [];
   updateSummary();
+
+  // Rétablir l’état du bouton
+  finaliserBtn.disabled = false;
+  finaliserBtn.textContent = originalText;
 });
 
 
