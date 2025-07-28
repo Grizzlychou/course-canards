@@ -190,7 +190,7 @@ finaliserBtn.addEventListener('click', async function () {
 
 
 // Construire et afficher le récapitulatif de confirmation
-function showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo) {
+function showConfirmation(paymentMethod, email, notifyNextYear, initiation) {
   // Message de base avec les numéros triés
   let message  = "Vous avez réservé les canards : " +
     selected.slice().sort((a, b) => a - b).join(', ');
