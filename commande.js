@@ -131,17 +131,18 @@ finaliserBtn.addEventListener('click', async function () {
   const email = emailInput.value.trim();
   const paymentMethod = document.querySelector('input[name="paiement"]:checked')?.value;
   const notifyCheckbox = document.getElementById('notifyCheckbox');
-  const paymentInfoCheckbox = document.getElementById('paymentInfoCheckbox');
   const prenomInput = document.getElementById('prenom');
   const nomInput = document.getElementById('nom');
   const participationCheckbox = document.getElementById('participation');
+  const initiation = document.getElementById('initiation')?.checked || false;
 
   const prenom = prenomInput ? prenomInput.value.trim() : '';
   const nom = nomInput ? nomInput.value.trim() : '';
   const participation = participationCheckbox ? participationCheckbox.checked : false;
-
   const notifyNextYear = notifyCheckbox ? notifyCheckbox.checked : false;
-  const sendPaymentInfo = paymentInfoCheckbox ? paymentInfoCheckbox.checked : false;
+
+});
+
 
   if (selected.length === 0) {
     alert("Veuillez sélectionner au moins un canard.");
@@ -166,7 +167,7 @@ finaliserBtn.addEventListener('click', async function () {
     participation: participation,
     moyenPaiement: paymentMethod,
     notifyNextYear: notifyNextYear,
-    sendPaymentInfo: sendPaymentInfo
+    initiation: initiation,
   };
 
   try {
@@ -184,7 +185,7 @@ finaliserBtn.addEventListener('click', async function () {
 
   await chargerStatuts(); // Recharge la grille avec les canards à jour
   modal.style.display = 'none';
-  showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo);
+  showConfirmation(paymentMethod, email, notifyNextYear, initiation);
   selected = [];
   updateSummary();
 });
@@ -217,7 +218,7 @@ function showConfirmation(paymentMethod, email, notifyNextYear, sendPaymentInfo)
   if (notifyNextYear) {
     message += "<br>• Vous recevrez une invitation pour la prochaine édition.";
   }
-  if (sendPaymentInfo) {
+  if (initiation) {
     message += "<br>• Vous recevrez une invitation pour une initiation au Dogeball avec le DBC de Jodoigne ";
   }
 
