@@ -140,7 +140,7 @@ finaliserBtn.addEventListener('click', async function () {
   const nom = nomInput ? nomInput.value.trim() : '';
   const participation = participationCheckbox ? participationCheckbox.checked : false;
   const notifyNextYear = notifyCheckbox ? notifyCheckbox.checked : false;
-}
+
   if (selected.length === 0) {
     alert("Veuillez sélectionner au moins un canard.");
     return;
