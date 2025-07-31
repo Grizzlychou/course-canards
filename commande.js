@@ -224,6 +224,7 @@ function showConfirmation(paymentMethod, email, notifyNextYear, initiation) {
 
   // Ajouter l'adresse e-mail
   message += "<br><br>Un e‑mail de confirmation sera envoyé à : " + email;
+  message += "<br><strong>(Attention : si vous ne recevez pas de mail, vérifiez vos spams !)</strong>";
 
   // Ajouter les options de notification
   if (notifyNextYear) {
