@@ -1,5 +1,5 @@
 // URL de votre Web App Apps Script (déploiement "Web App")
-const scriptURL = 'https://cript.google.com/macros/s/AKfycby47wFzKyuN5N_82DGX5uCds4VK8zgTdAWF2B9-sNMLGD8K8VTGcNcnT8dW7_48azeg/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycby47wFzKyuN5N_82DGX5uCds4VK8zgTdAWF2B9-sNMLGD8K8VTGcNcnT8dW7_48azeg/exec';
 
 // Liste des numéros déjà réservés (sera remplie en appelant chargerStatuts)
 const reservedNumbers = [];
