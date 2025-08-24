@@ -44,7 +44,7 @@ async function chargerStatuts() {
 }
 
 // Affiche la modale principale et génère la grille la première fois
-reserveBtn.addEventListener('click', async function(e) {
+.addEventListener('click', async function(e) {
   e.preventDefault();
   modal.style.display = 'block';
   if (!duckGrid.dataset.generated) {
